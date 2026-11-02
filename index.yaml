@@ -3,7 +3,17 @@ entries:
   myhelmchartnov2:
   - apiVersion: v2
     appVersion: "1.28"
-    created: "2026-11-02T06:40:47.8227464+05:30"
+    created: "2026-11-02T07:20:13.5911352+05:30"
+    description: Nginx Helm chart
+    digest: 7e35d93179b472a71f80f96bb4f4affdd7d9f19b2c9d41aed4b88153c9722ce4
+    name: myhelmchartnov2
+    type: application
+    urls:
+    - https://anandambitionv2.github.io/myhelmchartnov2/myhelmchartnov2-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: "1.28"
+    created: "2026-11-02T07:20:13.5894727+05:30"
     description: Nginx Helm chart
     digest: 7e42dcfa0c3afb92344cdcd17262f191d08713210a61bb1f09467372b0ca5338
     name: myhelmchartnov2
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://anandambitionv2.github.io/myhelmchartnov2/myhelmchartnov2-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-02T06:40:47.8202275+05:30"
+generated: "2026-11-02T07:20:13.5884067+05:30"
