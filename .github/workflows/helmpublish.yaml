@@ -1,0 +1,57 @@
+
+name: Publish Helm Chart to ACR
+
+on:
+ 
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  CHART_PATH: ./
+  ACR_NAME: acrforhelm
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Install Helm
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      # 3. Azure authentication using Workload Identity Federation
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: "63756db8-c75f-46b8-a5d8-4e87c74bb5d4"
+          tenant-id: 5f8d3f88-8e5b-4e25-9d00-e62229c9cc71
+          subscription-id: 228a46db-66c5-4a23-9ed7-677a552990bc
+
+      # 4. Validate Helm chart
+      - name: Helm Lint
+        run: |
+          helm lint $CHART_PATH
+
+      # 5. Package Helm chart
+      - name: Package Helm Chart
+        run: |
+          mkdir -p ./packages
+          helm package $CHART_PATH --destination ./packages
+
+      # 6. Authenticate to ACR
+      - name: Login to ACR
+        run: |
+          az acr login --name "$ACR_NAME"
+
+      # 7. Push Helm chart to ACR
+      - name: Push Helm Chart
+        run: |
+          helm push ./packages/*.tgz \
+            oci://$ACR_NAME.azurecr.io/helm
